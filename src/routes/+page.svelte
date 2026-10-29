@@ -75,63 +75,70 @@
 
 <div class="min-h-screen bg-[#10030c] text-[#f5e6ec] font-sans">
   <main id="content" class="max-w-7xl mx-auto px-6 py-4 space-y-20">
-    <!-- HERO SECTION: Presisi Layout & Composited Roster -->
+<!-- HERO SECTION: Presisi Layout & Composited Roster -->
     <section class="rumble-hero">
       <div class="space-y-6 z-10">
-        <div class="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[#a38a99]">
-          <span class="text-[#ffc700]">{currentSeason.title}</span>
-          <span>·</span>
-          <div class="flex items-center gap-2">
-            <img src={sponsorLogo} alt="Ourastore" class="h-4 object-contain" />
-            <span>x</span>
-            <img src={hostLogo} alt="AnonimDT" class="h-4 object-contain" />
+        
+        <!-- BAGIAN KIRI: Info Season, Juara, Result Card, Tombol -->
+        <div class="space-y-6">
+          <div class="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[#a38a99]">
+            <span class="text-[#ffc700]">{currentSeason.title}</span>
           </div>
-        </div>
 
-        <div>
-          <span class="champion-eyebrow">Juara</span>
-          <h1 class="champion-title">
-            <span class="champion-title__prefix">TEAM</span>
-            <span class="champion-title__name">AE</span>
-          </h1>
-        </div>
+          <div>
+            <span class="champion-eyebrow">Juara</span>
+            <h1 class="champion-title">
+              <span class="champion-title__prefix">TEAM</span>
+              <span class="champion-title__name">AE</span>
+            </h1>
+          </div>
 
-        <div class="result-card">
-          <p class="result-card__label">
-            <Trophy class="w-4 h-4 text-[#ffc700] shrink-0" />
-            Grand Final
-          </p>
-          <div class="result-card__body">
-            <div class="result-team">
-              <img src="/event/teams/ae.webp" alt="TEAM AE" />
-              <span>AE</span>
-            </div>
-            <strong class="result-score">2–0</strong>
-            <div class="result-team result-team--lost">
-              <img src="/event/teams/b2f-alpha.webp" alt="TEAM B2F ALPHA" />
-              <span>B2F ALPHA</span>
+          <div class="result-card">
+            <p class="result-card__label">
+              <Trophy class="w-4 h-4 text-[#ffc700] shrink-0" />
+              Grand Final
+            </p>
+            <div class="result-card__body">
+              <div class="result-team">
+                <img src="/event/teams/ae.webp" alt="TEAM AE" />
+                <span>AE</span>
+              </div>
+              <strong class="result-score">2–0</strong>
+              <div class="result-team result-team--lost">
+                <img src="/event/teams/b2f-alpha.webp" alt="TEAM B2F ALPHA" />
+                <span>B2F ALPHA</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="flex items-center gap-4 pt-2">
-          <a 
-            href={`/matches/${featuredMatchId}`} 
-            class="inline-flex items-center gap-2 bg-[#ffc700] text-black font-extrabold text-xs uppercase px-7 py-3.5 hover:bg-yellow-400 transition"
-          >
-            LIHAT FINAL <ArrowUpRight class="w-4 h-4" />
-          </a>
-          <a 
-            href="https://www.youtube.com/live/cHZKzP6N2xQ?si=b8lvQybpOEnBOzB6" 
-            class="inline-flex items-center gap-2 text-white font-bold text-xs hover:text-[#ffc700] transition"
-          >
-            <Play class="w-4 h-4 fill-current" /> Tonton final
-          </a>
+          <div class="flex items-center gap-4 pt-2">
+            <a 
+              href={`/matches/${featuredMatchId}`} 
+              class="inline-flex items-center gap-2 bg-[#ffc700] text-black font-extrabold text-xs uppercase px-7 py-3.5 hover:bg-yellow-400 transition"
+            >
+              LIHAT FINAL <ArrowUpRight class="w-4 h-4" />
+            </a>
+            <a 
+              href="https://www.youtube.com/live/cHZKzP6N2xQ?si=b8lvQybpOEnBOzB6" 
+              class="inline-flex items-center gap-2 text-white font-bold text-xs hover:text-[#ffc700] transition"
+            >
+              <Play class="w-4 h-4 fill-current" /> Tonton final
+            </a>
+          </div>
         </div>
       </div>
 
       <!-- Championship Hero Scene -->
-      <div class="scene-stage">
+      <div class="scene-stage relative">
+        
+        <!-- LOGO OURASTORE & ANONIMDT DI ATAS KANAN -->
+        <div class="absolute top-0 right-0 z-20 flex items-center gap-3 pt-2 pr-2">
+          <img src={sponsorLogo} alt="Ourastore" class="h-6 md:h-8 object-contain" />
+          <span class="text-[#a38a99] font-bold">×</span>
+          <img src={hostLogo} alt="AnonimDT" class="h-6 md:h-8 object-contain" />
+        </div>
+
+        <!-- Frame jajaran genjang -->
         <div class="scene-environment" aria-hidden="true">
           <svg class="w-full h-full" viewBox="0 0 800 650" fill="none" preserveAspectRatio="xMidYMid meet">
             <path class="standard-field" d="M180 78H759L569 630H13Z" />
