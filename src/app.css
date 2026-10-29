@@ -1,0 +1,335 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800;1,900&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --rumble-bg: #10030c;
+  --rumble-gold: #ffc700;
+  --rumble-muted: #a38a99;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+}
+
+body {
+  background-color: var(--rumble-bg);
+  color: #f5e6ec;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Hero Section Layout */
+.rumble-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .rumble-hero {
+    grid-template-columns: 11fr 13fr;
+  }
+}
+
+/* Captain Spotlight Styling */
+.spotlight-stage {
+  position: relative;
+  background: #190614;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .spotlight-stage {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.spotlight-ghost {
+  position: absolute;
+  right: 2rem;
+  bottom: 0;
+  font-family: var(--font-display);
+  font-size: 14rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.03);
+  line-height: 0.8;
+  pointer-events: none;
+  user-select: none;
+}
+
+.spotlight-portrait-frame {
+  position: relative;
+  width: 220px;
+  height: 300px;
+  background: #0d020a;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.selector-face {
+  display: block;
+  width: 48px;
+  height: 64px;
+  background: #0d020a;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+
+/* =========================================================
+   CHAMPION HERO — teks
+   ========================================================= */
+
+.champion-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--rumble-gold);
+}
+.champion-eyebrow::before {
+  content: '';
+  width: 2.5rem;
+  height: 2px;
+  background: currentColor;
+}
+
+.champion-title {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  text-transform: uppercase;
+  line-height: 0.82;
+}
+.champion-title__prefix {
+  font-weight: 800;
+  font-size: clamp(2.25rem, 4.5vw, 4rem);
+  letter-spacing: 0.06em;
+  color: #fff;
+}
+.champion-title__name {
+  padding-right: 0.12em; /* ruang untuk overhang huruf italic */
+  font-weight: 900;
+  font-size: clamp(8rem, 14vw, 14rem);
+  letter-spacing: -0.01em;
+  background: linear-gradient(180deg, #ffffff 35%, #ffe27a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 12px 32px rgba(255, 199, 0, 0.2));
+}
+
+/* Kartu skor Grand Final */
+.result-card {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem 1.1rem;
+  background: linear-gradient(135deg, rgba(255, 199, 0, 0.1), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 199, 0, 0.22);
+  border-left: 3px solid var(--rumble-gold);
+  backdrop-filter: blur(6px);
+}
+.result-card__label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--rumble-muted);
+}
+.result-card__body {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+.result-team {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.result-team img {
+  height: 2.75rem;
+  width: auto;
+  object-fit: contain;
+}
+.result-team--lost {
+  color: var(--rumble-muted);
+}
+.result-team--lost img {
+  opacity: 0.6;
+}
+.result-score {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: 3.25rem;
+  line-height: 1;
+  color: var(--rumble-gold);
+  text-shadow: 0 0 24px rgba(255, 199, 0, 0.35);
+}
+
+/* =========================================================
+   CHAMPION HERO — panggung & formasi
+   Semua portrait 1080 x 1512 (5:7). Ukuran pakai % saja,
+   panggung dikunci dengan aspect-ratio supaya formasi
+   tetap proporsional di semua lebar layar.
+   ========================================================= */
+
+.scene-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.12 / 1;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Cahaya emas tipis di belakang tim */
+.scene-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(60% 55% at 45% 62%, rgba(255, 199, 0, 0.14), transparent 70%);
+  pointer-events: none;
+}
+
+/* Fade bawah: menutup potongan kasar kaki foto */
+.scene-stage::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 34%;
+  z-index: 25;
+  background: linear-gradient(to top, var(--rumble-bg) 10%, transparent);
+  pointer-events: none;
+}
+
+.scene-environment {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.standard-field { fill: #1d0917; }
+.standard-edge  { stroke: rgba(255, 255, 255, 0.12); stroke-width: 1.5; }
+.standard-rule  { stroke: var(--rumble-gold); stroke-width: 2; opacity: 0.5; }
+
+.player-node {
+  position: absolute;
+  pointer-events: none;
+  transform: translateX(-50%);
+  /* animasi pakai property `translate` agar tidak menimpa transform di atas */
+  animation: node-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+.player-node a {
+  display: block;
+  width: 100%;
+  pointer-events: auto;
+  transition: translate 0.3s ease;
+}
+.player-node a:hover { translate: 0 -6px; }
+.player-node img,
+.player-node canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@keyframes node-in {
+  from { opacity: 0; translate: 0 28px; }
+}
+
+/* Belakang */
+.node-mikoto { z-index: 1;  width: 43%;   left: 50%; bottom: 30%; filter: brightness(0.78) contrast(1.05); }
+.node-aville { z-index: 2;  width: 31.5%; left: 22%; bottom: 25%; opacity: 0.92; }
+.node-dorii  { z-index: 2;  width: 30%;   left: 82%; bottom: 27%; opacity: 0.92; }
+/* Depan */
+.node-rinee  { z-index: 10; width: 41%;   left: 68%; bottom: -1%; }
+.node-nafari { z-index: 20; width: 44%;   left: 38%; bottom: -2%; filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.7)); }
+
+/* Nama roster di bawah foto */
+.roster-caption {
+  position: absolute;
+  inset: auto 0 0.75rem 0;
+  z-index: 30;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem 1.1rem;
+  margin: 0;
+  padding: 0 1rem;
+  list-style: none;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rumble-muted);
+  pointer-events: none;
+}
+.roster-caption .is-captain { color: #fff; }
+.roster-caption .is-captain span {
+  margin-right: 0.5rem;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.65rem;
+  background: var(--rumble-gold);
+  color: #000;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .player-node { animation: none; }
+  .player-node a { transition: none; }
+}
+
+@media (max-width: 640px) {
+  .result-team span { display: none; }
+  .result-card { width: 100%; }
+  .result-card__body { justify-content: space-between; }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 100s linear infinite;
+}
