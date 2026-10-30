@@ -1,7 +1,9 @@
 // src/routes/channels/+page.server.ts
 import { CREATORS } from '#lib/data/season1';
 import type { PageServerLoad } from './$types';
-import { YOUTUBE_API_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
+
+const YOUTUBE_API_KEY = env.YOUTUBE_API_KEY || 'default-api-key';
 
 // Variabel untuk menyimpan cache di memori server
 let cachedData: { creators: any[]; liveCount: number } | null = null;
