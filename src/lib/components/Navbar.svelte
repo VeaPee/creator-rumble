@@ -14,7 +14,7 @@
       <a href="/schedule" class="hover:text-white transition">Jadwal &amp; hasil</a>
       <a href="/teams" class="hover:text-white transition">Tim</a>
       <a href="/creators" class="hover:text-white transition">Kreator</a>
-      <a href="/videos" class="hover:text-white transition">Video</a>
+      <a href="/channels" class="hover:text-white transition">Channel</a>
       <a href="/seasons/creator-rumble-season-1" class="bg-white/5 border border-white/10 text-xs px-3 py-1.5 rounded-full font-bold text-[#ffc700] hover:bg-white/10 transition">
         Season 1
       </a>

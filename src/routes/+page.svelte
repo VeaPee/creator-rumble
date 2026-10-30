@@ -1,14 +1,17 @@
 <!-- src/routes/seasons/creator-rumble-season-1/+page.svelte -->
 <script lang="ts">
-  import { Trophy, Play, ArrowUpRight, ArrowRight, ArrowLeft, Menu } from 'lucide-svelte';
+  import { Trophy, Play, ArrowUpRight, ArrowRight } from 'lucide-svelte';
   import CreatorImage from '#lib/components/CreatorImage.svelte';
   import CaptainSpotlight from '#lib/components/CaptainSpotlight.svelte';
   import TeamGrid from '#lib/components/TeamGrid.svelte';
-  import { CREATORS, TEAMS } from '#lib/data/season1';
-  import { SEASONS } from '#lib/data/seasons';
   import StandingsTable from '#lib/components/StandingsTable.svelte';
+  import { TEAMS } from '#lib/data/season1';
+  import { SEASONS } from '#lib/data/seasons';
+  import type { PageData } from './$types';
 
-  // Mengubah objek TEAMS menjadi array klasemen yang diurutkan berdasarkan rankLabel
+  let { data }: { data: PageData } = $props();
+
+  // Mengubah objek TEAMS menjadi array klasemen yang diurutkan berdasarkan rankLabel[cite: 14]
   const standings = Object.values(TEAMS)
     .map((team) => ({
       pos: team.rankLabel ?? '9+',
@@ -18,20 +21,17 @@
       isChampion: team.rankLabel === '1'
     }))
     .sort((a, b) => {
-      // Fungsi pengurutan sederhana berdasarkan posisi angka
       const parsePos = (p: string) => parseInt(p.split('–')[0]) || 99;
       return parsePos(a.pos) - parsePos(b.pos);
     });
 
-  // Ambil data spesifik Season 1 secara dinamis dari central data 'SEASONS'
+  // Ambil data spesifik Season 1 secara dinamis dari central data 'SEASONS'[cite: 14]
   const currentSeason = SEASONS.find((s) => s.slug === 'creator-rumble-season-1')!;
 
-  // Sponsor & Host branding info
   const sponsorLogo = '/event/logo/ourastore.webp';
   const hostLogo = '/event/logo/anonimdt.webp';
   const featuredMatchId = '0aeee182-aa24-45c4-9002-7838388959c3';
 
-  // Format data kapten otomatis dari objek TEAMS & CREATORS Season 1
   const captains = Object.values(TEAMS).map((team) => ({
     slug: team.captain.slug,
     name: team.captain.name,
@@ -40,10 +40,8 @@
     roster: team.roster.filter((m) => m.slug !== team.captain.slug).map((m) => m.name)
   }));
 
-  // Cari kapten tim juara (TEAM AE -> Nafari)
   const championCaptain = captains.find((c) => c.slug === 'nafari') ?? captains[0];
 
-  // Node visual hero untuk formasi roster juara
   const heroNodes = [
     { slug: 'mikoto', name: 'Mikoto' },
     { slug: 'aville', name: 'Aville' },
@@ -52,7 +50,6 @@
     { slug: 'nafari', name: 'Nafari' }
   ];
 
-  // Jalan menuju gelar juara (Journey)
   const journey = [
     { round: 'Upper · Ronde 1', opponent: 'TEAM AAA', score: '1:0' },
     { round: 'Upper · Ronde 2', opponent: 'TEAM KCG', score: '1:0' },
@@ -60,13 +57,11 @@
     { round: 'Grand Final', opponent: 'TEAM B2F ALPHA', score: '2:0' }
   ];
 
-  // Daftar tim untuk TeamGrid
   const teamsList = Object.values(currentSeason.teams).map((t) => ({
     code: t.code,
     name: t.name,
     image: t.image
   }));
-  
 </script>
 
 <svelte:head>
@@ -75,11 +70,9 @@
 
 <div class="min-h-screen bg-[#10030c] text-[#f5e6ec] font-sans">
   <main id="content" class="max-w-7xl mx-auto px-6 py-4 space-y-20">
-<!-- HERO SECTION: Presisi Layout & Composited Roster -->
+    <!-- HERO SECTION -->
     <section class="rumble-hero">
       <div class="space-y-6 z-10">
-        
-        <!-- BAGIAN KIRI: Info Season, Juara, Result Card, Tombol -->
         <div class="space-y-6">
           <div class="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[#a38a99]">
             <span class="text-[#ffc700]">{currentSeason.title}</span>
@@ -130,15 +123,12 @@
 
       <!-- Championship Hero Scene -->
       <div class="scene-stage relative">
-        
-        <!-- LOGO OURASTORE & ANONIMDT DI ATAS KANAN -->
         <div class="absolute top-0 right-0 z-20 flex items-center gap-3 pt-2 pr-2">
           <img src={sponsorLogo} alt="Ourastore" class="h-6 md:h-8 object-contain" />
           <span class="text-[#a38a99] font-bold">×</span>
           <img src={hostLogo} alt="AnonimDT" class="h-6 md:h-8 object-contain" />
         </div>
 
-        <!-- Frame jajaran genjang -->
         <div class="scene-environment" aria-hidden="true">
           <svg class="w-full h-full" viewBox="0 0 800 650" fill="none" preserveAspectRatio="xMidYMid meet">
             <path class="standard-field" d="M180 78H759L569 630H13Z" />
@@ -195,7 +185,6 @@
 
       <div class="bg-[#190614] border border-white/10 overflow-hidden rounded-none">
         <div class="grid md:grid-cols-[1fr_minmax(180px,auto)_1fr] items-stretch min-h-[360px] lg:min-h-[420px]">
-          <!-- Tim Kiri (Winner) -->
           <div class="relative group overflow-hidden flex items-end p-6 min-h-[280px]">
             <img src="/event/teams/ae.webp" alt="TEAM AE" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition duration-500" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
@@ -207,7 +196,6 @@
             </div>
           </div>
 
-          <!-- Skor Tengah -->
           <div class="bg-[#0f040c] border-x border-white/10 px-4 py-6 flex flex-col items-center justify-center text-center z-20 space-y-3 shrink-0">
             <span class="text-[11px] font-bold text-[#ffc700] tracking-widest uppercase">BO3</span>
             <div class="text-5xl lg:text-6xl font-black font-display text-[#ffc700] tracking-normal leading-none whitespace-nowrap">
@@ -218,7 +206,6 @@
             </a>
           </div>
 
-          <!-- Tim Kanan (Runner Up) -->
           <div class="relative group overflow-hidden flex items-end justify-end p-6 min-h-[280px]">
             <img src="/event/teams/b2f-alpha.webp" alt="TEAM B2F ALPHA" class="absolute inset-0 w-full h-full object-cover object-top grayscale opacity-75 group-hover:scale-105 group-hover:opacity-100 group-hover:grayscale-0 transition duration-500" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
@@ -244,9 +231,9 @@
       <CaptainSpotlight {captains} />
     </section>
 
-    <!-- YouTube Creator Channels Marquee Section -->
+    <!-- YouTube Creator Channels Marquee Section (DINAMIS LIVE COUNT) -->
     <section id="channels" class="space-y-6 pt-4 border-t border-white/10 overflow-hidden">
-      <div class="flex justify-between items-end">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <h2 class="text-3xl lg:text-4xl font-black font-display uppercase tracking-wide text-white">
             Kanal YouTube Kreator
@@ -255,20 +242,40 @@
             Tonton watch party dan konten Creator Rumble langsung dari channel resmi para kreator.
           </p>
         </div>
-        <a href="/creators" class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#ffc700] hover:underline">
-          Semua kreator <ArrowUpRight class="w-4 h-4" />
-        </a>
+
+        <div class="flex items-center gap-4">
+          <!-- Widget Indikator ON AIR Real-time -->
+          <div class="flex items-center bg-[#190614] border border-white/10 px-3 py-1.5 shrink-0">
+            <div class="flex items-center gap-2 pr-3 border-r border-white/10 text-xs font-black font-mono tracking-widest text-white">
+              <span class="w-2 h-2 rounded-full {data.liveCount > 0 ? 'bg-red-500 animate-pulse' : 'bg-gray-500'}"></span>
+              <span>ON AIR</span>
+            </div>
+            <div class="pl-3 font-mono font-black text-sm text-[#ffc700] min-w-[28px] text-center">
+              {String(data.liveCount).padStart(2, '0')}
+            </div>
+          </div>
+
+          <a href="/channels" class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#ffc700] hover:underline shrink-0">
+            Semua Channel <ArrowUpRight class="w-4 h-4" />
+          </a>
+        </div>
       </div>
 
       <div class="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
         <div class="flex w-max animate-marquee gap-6 py-2 hover:[animation-play-state:paused]">
-          {#each [...Object.values(CREATORS), ...Object.values(CREATORS)] as creator, i (creator.slug + '-' + i)}
+          {#each [...data.creators, ...data.creators] as creator, i (creator.slug + '-' + i)}
             <a 
               href={creator.youtubeUrl ?? `https://www.youtube.com/results?search_query=${encodeURIComponent(creator.name + ' Creator Rumble by Ourastore')}`} 
               target="_blank" 
               rel="noopener noreferrer"
-              class="flex items-center gap-3 bg-[#190614] border border-white/10 p-4 min-w-[240px] group hover:border-[#ffc700] transition shrink-0"
+              class="flex items-center gap-3 bg-[#190614] border border-white/10 p-4 min-w-[240px] group hover:border-[#ffc700] transition shrink-0 relative"
             >
+              {#if creator.isLive}
+                <span class="absolute top-2 right-2 bg-red-600 text-white text-[9px] font-extrabold px-1.5 py-0.5 uppercase tracking-widest animate-pulse z-10">
+                  LIVE
+                </span>
+              {/if}
+
               <div class="w-12 h-12 shrink-0 bg-[#0d020a] border border-white/10 overflow-hidden relative flex items-center justify-center">
                 <img src={creator.imageCard ?? creator.image} alt={creator.name} class="w-full h-full object-cover group-hover:scale-105 transition" />
               </div>
@@ -331,7 +338,6 @@
     </section>
 
     <!-- Klasemen Akhir Table -->
-<!-- Klasemen Akhir Table -->
     <div id="klasemen">
       <StandingsTable {standings} />
     </div>
