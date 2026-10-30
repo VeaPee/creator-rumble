@@ -20,6 +20,10 @@ async function checkChannelLiveStatus(youtubeUrl: string): Promise<boolean> {
       `https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=${handle}&key=${YOUTUBE_API_KEY}`
     );
     const channelData = await channelRes.json();
+
+    // TAMBAHKAN KODE INI UNTUK MENGECEK RESPON API DI LOG
+    console.log(`[Cek API YouTube] Handle: @${handle}`, channelData);
+
     if (!channelData.items || channelData.items.length === 0) return false;
     const channelId = channelData.items[0].id;
 
