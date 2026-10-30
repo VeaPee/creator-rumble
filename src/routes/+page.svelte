@@ -8,8 +8,26 @@
   import { TEAMS } from '#lib/data/season1';
   import { SEASONS } from '#lib/data/seasons';
   import type { PageData } from './$types';
+  import { onMount } from 'svelte';
 
   let { data }: { data: PageData } = $props();
+
+// State untuk mengontrol animasi belah
+  let isLoading = $state(true);
+  let isAnimatingOut = $state(false);
+
+  onMount(() => {
+    // Setelah 800ms, mulai animasi belah tirai
+    const timer = setTimeout(() => {
+      isAnimatingOut = true;
+      // Hilangkan elemen DOM sepenuhnya setelah animasi CSS selesai (800ms)
+      setTimeout(() => {
+        isLoading = false;
+      }, 800);
+    }, 800);
+
+    return () => clearTimeout(timer);
+  });
 
   // Mengubah objek TEAMS menjadi array klasemen yang diurutkan berdasarkan rankLabel[cite: 14]
   const standings = Object.values(TEAMS)
@@ -88,6 +106,27 @@
 <svelte:head>
   <title>Creator Rumble Season 1 · TEAM AE juara</title>
 </svelte:head>
+
+<!-- SPLIT SCREEN LOADING CURTAINS -->
+{#if isLoading}
+  <div class="fixed inset-0 z-50 pointer-events-none flex flex-col overflow-hidden">
+    <!-- Panel Atas (Membelah ke atas) -->
+    <div class="absolute inset-x-0 top-0 h-1/2 bg-[#10030c] border-b border-white/10 z-10 flex items-end justify-center pb-4 transition-transform duration-700 ease-in-out {isAnimatingOut ? '-translate-y-full' : 'translate-y-0'}">
+    </div>
+
+    <!-- Panel Bawah (Membelah ke bawah) -->
+    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-[#10030c] border-t border-white/10 z-10 flex items-start justify-center pt-4 transition-transform duration-700 ease-in-out {isAnimatingOut ? 'translate-y-full' : 'translate-y-0'}">
+    </div>
+
+    <!-- Logo & Indikator di Tengah (Ikut memudar saat tirai membuka) -->
+    <div class="absolute inset-0 z-20 flex flex-col items-center justify-center space-y-6 transition-opacity duration-300 {isAnimatingOut ? 'opacity-0' : 'opacity-100'}">
+      <img src={sponsorLogo} alt="Ourastore" class="h-12 md:h-16 object-contain animate-pulse" />
+      <div class="w-24 h-1 bg-white/10 rounded-full overflow-hidden">
+        <div class="bg-[#ffc700] h-full w-full animate-[shimmer_1.5s_infinite]"></div>
+      </div>
+    </div>
+  </div>
+{/if}
 
 <div class="min-h-screen bg-[#10030c] text-[#f5e6ec] font-sans">
   <main id="content" class="max-w-7xl mx-auto px-6 py-4 space-y-20">
