@@ -22,9 +22,9 @@ console.log(
   '| mengandung YOUTUBE:', Object.keys(env).filter((k) => k.includes('YOUTUBE'))
 );
 async function ytFetch(path: string, params: Record<string, string>) {
-  const key = env.YOUTUBE_API_KEY;
+  const key = env.YOUTUBE_API_KEY ?? process.env.YOUTUBE_API_KEY;
   if (!key) throw new Error('YOUTUBE_API_KEY belum diset di environment');
-
+  console.log('process.env:', Object.keys(process.env).length, 'key ada?', Boolean(process.env.YOUTUBE_API_KEY));
   const res = await fetch(`${API}/${path}?${new URLSearchParams({ ...params, key })}`);
   const data = await res.json();
 
