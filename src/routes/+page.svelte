@@ -57,6 +57,27 @@
     { round: 'Grand Final', opponent: 'TEAM B2F ALPHA', score: '2:0' }
   ];
 
+  const highlights = [
+    {
+      title: 'PLAYER DRAFT - CREATOR RUMBLE BY OURASTORE',
+      videoId: 'Cv0NZoIRdEk', // Contoh ID Video YouTube
+      thumbnail: 'https://i.ytimg.com/vi/Cv0NZoIRdEk/hq720.jpg',
+      duration: '51:12'
+    },
+    {
+      title: 'CREATOR RUMBLE BY OURASTORE - DAY 1',
+      videoId: 'HNWEUYKM-dI',
+      thumbnail: 'https://i.ytimg.com/vi/HNWEUYKM-dI/hq720.jpg',
+      duration: '5:33:29'
+    },
+    {
+      title: 'CREATOR RUMBLE BY OURASTORE - DAY 2',
+      videoId: 'cHZKzP6N2xQ',
+      thumbnail: 'https://i.ytimg.com/vi/cHZKzP6N2xQ/hq720.jpg',
+      duration: '5:57:11'
+    }
+  ];
+
   const teamsList = Object.values(currentSeason.teams).map((t) => ({
     code: t.code,
     name: t.name,
@@ -214,6 +235,51 @@
               <span class="inline-block text-[10px] font-bold bg-white/10 text-[#a38a99] px-3 py-0.5 tracking-widest uppercase">RUNNER UP</span>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEKSI HIGHLIGHT VIDEO (MARQUEE BERGESER) -->
+    <section id="highlights" class="space-y-6 pt-4 border-t border-white/10 overflow-hidden">
+      <div class="flex justify-between items-end px-6">
+        <div>
+          <h2 class="text-3xl lg:text-4xl font-black font-display uppercase tracking-wide text-white">
+            Highlight <span class="text-[#ffc700]">Video Pilihan</span>
+          </h2>
+          <p class="text-xs text-[#a38a99] font-semibold mt-1">Saksikan kembali momen-momen terbaik Creator Rumble Season 1.</p>
+        </div>
+      </div>
+
+      <!-- Kontainer Marquee Bergeser -->
+      <div class="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+        <div class="flex w-max animate-marquee gap-6 py-2 hover:[animation-play-state:paused]">
+          <!-- Array diduplikasi agar pergerakan looping-nya mulus tanpa jeda kosong -->
+          {#each [...highlights, ...highlights] as item, i (item.videoId + '-' + i)}
+            <a 
+              href={`https://www.youtube.com/watch?v=${item.videoId}`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="bg-[#190614] border border-white/10 group overflow-hidden hover:border-[#ffc700] transition duration-300 flex flex-col w-[320px] sm:w-[380px] shrink-0"
+            >
+              <div class="relative aspect-video bg-black overflow-hidden">
+                <img src={item.thumbnail} alt={item.title} class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                <div class="absolute inset-0 bg-black/30 group-hover:bg-transparent transition flex items-center justify-center">
+                  <div class="w-12 h-12 rounded-full bg-[#ffc700] text-black flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                    <Play class="w-5 h-5 fill-current ml-0.5" />
+                  </div>
+                </div>
+                <span class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-mono px-2 py-0.5 font-bold">
+                  {item.duration}
+                </span>
+              </div>
+              <div class="p-4 flex items-center justify-between gap-2">
+                <h3 class="text-xs font-black uppercase text-white tracking-wider group-hover:text-[#ffc700] transition truncate">
+                  {item.title}
+                </h3>
+                <ArrowUpRight class="w-4 h-4 text-[#a38a99] group-hover:text-[#ffc700] shrink-0 transition" />
+              </div>
+            </a>
+          {/each}
         </div>
       </div>
     </section>

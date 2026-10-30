@@ -137,7 +137,7 @@
 
 
     <!-- VIDEO PERTANDINGAN -->
-    {#if data.videos && data.videos.length > 0}
+    <!-- {#if data.videos && data.videos.length > 0}
       <section class="space-y-4">
         <div class="flex justify-between items-end border-b border-white/10 pb-3">
           <h2 class="text-xl font-black font-display uppercase text-white tracking-wide">
@@ -175,7 +175,7 @@
           {/each}
         </div>
       </section>
-    {/if}
+    {/if} -->
 
   </main>
 </div>
