@@ -16,6 +16,7 @@ let inflight: Promise<PageData> | null = null; // cegah request ganda saat cache
 
 // handle -> ID playlist "uploads" (tidak berubah, jadi disimpan permanen: 1 unit sekali saja)
 const uploadsPlaylistCache = new Map<string, string>();
+console.log('YOUTUBE_API_KEY terbaca?', Boolean(env.YOUTUBE_API_KEY), 'panjang:', env.YOUTUBE_API_KEY?.length);
 
 async function ytFetch(path: string, params: Record<string, string>) {
   const key = env.YOUTUBE_API_KEY;
