@@ -1,8 +1,7 @@
 // src/routes/seasons/creator-rumble-season-1/+page.server.ts
 import { CREATORS } from '#lib/data/season1';
 import type { PageServerLoad } from './$types';
-
-const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY || 'default-api-key';
+import { YOUTUBE_API_KEY } from '$env/static/private';
 
 // Variabel untuk menyimpan cache di memori server
 let cachedData: { creators: any[]; liveCount: number } | null = null;
@@ -26,7 +25,7 @@ async function checkChannelLiveStatus(youtubeUrl: string): Promise<boolean> {
       `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&eventType=live&type=video&key=${YOUTUBE_API_KEY}`
     );
     const searchData = await searchRes.json();
-
+console.log(searchData)
     return searchData.items && searchData.items.length > 0;
   } catch (error) {
     console.error('Gagal memeriksa status live YouTube:', error);
